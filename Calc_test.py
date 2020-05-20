@@ -13,33 +13,37 @@ class TestCalc:
     test_data = yaml.safe_load(open("F:\\pytest_or_unittest\\Add_and_Div_testdata.yaml"))
 
     def get_steps(self):
+
         with open('test_steps.yml') as f:
+
             return yaml.safe_load(f)
 
     def any_steps(self, data):
         step = self.get_steps()
         for steps in step:
             if 'add' == steps:
-                assert self.calc_add(data) == data[0]+data[1]
+                assert self.calc_add(data[0], data[1]) == data[0]+data[1]
             elif 'div' == steps:
-                assert self.calc_div(data) == data[0]/data[1]
+                assert self.calc_div(data[0], data[1]) == data[0]/data[1]
 
     @pytest.mark.parametrize('a,b', test_data['add_data'])
     def calc_steps(self, a, b):
+        #练习执行步骤
         data = [a, b]
+        print(data)
         self.any_steps(data)
 
     @pytest.mark.parametrize('a,b', test_data['add_data'])
     def calc_add(self, a, b):
         calc = Calc()
         result = calc.add(a, b)
-        assert a + b == result
+        return result
 
     @pytest.mark.parametrize('a,b', test_data['div_data'])
-    def calc_div(self, a, b,):
+    def calc_div(self, a, b):
         calc = Calc()
         result = calc.div(a, b)
-        assert a / b == result
+        return result
 
     @pytest.mark.parametrize('a,b', test_data['subtract_data'])
     def calc_subtract(self, a, b, instantiation):
